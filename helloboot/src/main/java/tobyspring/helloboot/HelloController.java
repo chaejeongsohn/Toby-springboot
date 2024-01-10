@@ -15,6 +15,6 @@ public  class HelloController {
 //        SimpleHelloSevice helloSevice = new SimpleHelloSevice();
 
         // Objects.requireNonNull() : Null 인 경우에 예외처리해주는 메소드
-        return  helloSevice.sayhello(Objects.requireNonNull(name));
+        return  helloSevice.sayHello(Objects.requireNonNull(name));
     }
 }

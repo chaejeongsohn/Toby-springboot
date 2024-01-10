@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,19 +17,16 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 
 @SpringBootApplication
-public class HellobootApplication {
+public class HelloBootApplication {
 
 	public static void main(String[] args) {
-		// spring container 생성
 		GenericApplicationContext applicationContext = new GenericApplicationContext();
-		// Bean 오브젝트 생성 (class 정보 넘겨주기)
 		applicationContext.registerBean(HelloController.class);
 		applicationContext.registerBean(SimpleHelloSevice.class);
-		// 구성정보로 container 초기화
 		applicationContext.refresh();
 
+		ConfigurableServletWebServerFactory serverFactory = createTomcatServerFactory(8422);
 
-		TomcatServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
 		WebServer webServer = serverFactory.getWebServer(servletContext -> {
 			servletContext.addServlet("hello", new HttpServlet() {
 				@Override
@@ -51,7 +50,13 @@ public class HellobootApplication {
 			}).addMapping("/*");
 		});
 		webServer.start();
+	}
 
+	@Bean
+	public static ConfigurableServletWebServerFactory createTomcatServerFactory(int port) {
+		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+		factory.setPort(port);
+		return factory;
 	}
 
 }
