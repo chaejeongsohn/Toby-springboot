@@ -3,16 +3,41 @@ package toby.helloboot;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-@SpringBootApplication
+/**
+ * @ Configuration :
+ * 		스프링 컨테이너가 @Bean 이 붙은 Factory Method 를 인지 할 수 있도록 한다.
+ */
+//
+@Configuration
 public class HelloBootApplication {
+	/**
+	 * Factory Method: 오브젝트를 생성하는 로직을 담고있는 메소드
+	 * 		Bean 오브젝트(Factory Method)를 자바코드로 만들면 더 쉽고 간결해진다
+	 */
+
+	@Bean
+	public HelloController helloController(HelloService helloService){
+		return new HelloController(helloService);
+	}
+
+	@Bean
+	public HelloService helloService(){
+		return new SimpleHelloService();
+	}
 
 	public static void main(String[] args) {
-		// DispatcherServlet 은 WebApplicationContext 타입을 전송해줘야한다.
-		// 스프링 컨테이너의 작업은 refresh() 라는 메소드에서 다 일어난다
-		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext(){
+		/**
+		 * GenericWebApplicationContext 은 자바코드로 만든 Configuration 정보를 읽을 수 없다.
+		 * 		-> AnnotationConfigWebApplicationContext 으로 변경한다
+		 */
+		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext(){
 			@Override
 			protected void onRefresh() {
 				super.onRefresh();
@@ -27,8 +52,7 @@ public class HelloBootApplication {
 				webServer.start();
 			}
 		};
-		applicationContext.registerBean(HelloController.class);
-		applicationContext.registerBean(SimpleHelloService.class);
+		applicationContext.register(HelloBootApplication.class);
 		applicationContext.refresh();
 
 	}
