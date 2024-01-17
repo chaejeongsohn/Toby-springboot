@@ -1,10 +1,10 @@
-package tobyspring.helloboot;
+package toby.helloboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HellobootApplicationTests {
+class HelloBootApplicationTests {
 
 	@Test
 	void contextLoads() {

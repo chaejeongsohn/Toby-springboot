@@ -1,6 +1,6 @@
-package tobyspring.helloboot;
+package toby.helloboot;
 
-public class SimpleHelloSevice implements HelloSevice {
+public class SimpleHelloService implements HelloService {
     @Override
     public String sayHello(String name) {
         return "Hello "+ name;
