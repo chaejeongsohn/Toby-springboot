@@ -1,36 +1,23 @@
 package toby.helloboot;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
-import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * @ Configuration :
  * 		스프링 컨테이너가 @Bean 이 붙은 Factory Method 를 인지 할 수 있도록 한다.
+ * @ ComponentScan :
+ * 		컴포넌트 스캐너는 annotation 이 붙은 모든 클래스를 찾아서 Bean 으로 등록해준다.
+ * 		Bean 으로 등록할 클래스에 @ Component 만 추가해주면 되니 간단하다.
+ * 		단점: 하지만 너무 많아지면 한눈에 보기 어렵다.
  */
-//
 @Configuration
+@ComponentScan
 public class HelloBootApplication {
-	/**
-	 * Factory Method: 오브젝트를 생성하는 로직을 담고있는 메소드
-	 * 		Bean 오브젝트(Factory Method)를 자바코드로 만들면 더 쉽고 간결해진다
-	 */
-
-	@Bean
-	public HelloController helloController(HelloService helloService){
-		return new HelloController(helloService);
-	}
-
-	@Bean
-	public HelloService helloService(){
-		return new SimpleHelloService();
-	}
 
 	public static void main(String[] args) {
 		/**
