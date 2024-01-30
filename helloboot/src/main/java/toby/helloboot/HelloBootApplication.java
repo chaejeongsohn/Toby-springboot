@@ -1,12 +1,11 @@
 package toby.helloboot;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -38,35 +37,9 @@ public class HelloBootApplication {
 
 	public static void main(String[] args) {
 		/**
-		 * GenericWebApplicationContext 은 자바코드로 만든 Configuration 정보를 읽을 수 없다.
-		 * 		-> AnnotationConfigWebApplicationContext 으로 변경한다
+		 * 이때까지 만든 MySpringApplication 이 SpringApplication 을 구현한 것과 같다.
 		 */
-		AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext(){
-			@Override
-			protected void onRefresh() {
-				super.onRefresh();
-
-				ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
-				DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
-
-				/**
-				 * DispatcherServlet 에 ApplicationContext 를 주입한다.
-				 * 하지만 이걸 직접하지 않더라도, Spring Container 가 알아서 주입해준다!!!
-				 * 	-> Bean 의 LifeCycleMethod 개념
-				 * 	-> Spring Container 가 초기화 되는 시점에일어난다.
-				 */
-				//dispatcherServlet.setApplicationContext(this);
-
-				WebServer webServer = serverFactory.getWebServer(servletContext -> {
-					servletContext.addServlet("dispatcherServlet", dispatcherServlet)
-							.addMapping("/*");
-				});
-				webServer.start();
-			}
-		};
-		applicationContext.register(HelloBootApplication.class);
-		applicationContext.refresh();
-
+//		MySpringApplication.run(HelloBootApplication.class, args);
+		SpringApplication.run(HelloBootApplication.class, args);
 	}
-
 }
