@@ -9,7 +9,17 @@ public class HelloServiceTest {
     @Test
     void simpleHelloService(){
         SimpleHelloService simpleHelloService = new SimpleHelloService();
-        String result = simpleHelloService.sayHello("Test");
-        assertThat(result).isEqualTo("Hello Test");
+        String response = simpleHelloService.sayHello("Test");
+
+        assertThat(response).isEqualTo("Hello Test");
     }
+
+    @Test
+    void helloDecorator() {
+        HelloDecorator decorator = new HelloDecorator(name -> name);
+        String response = decorator.sayHello("Test");
+
+        assertThat(response).isEqualTo("*Test*");
+    }
+
 }
