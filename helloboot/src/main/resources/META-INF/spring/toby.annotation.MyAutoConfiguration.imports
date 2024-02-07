@@ -1,2 +1,3 @@
 toby.config.DispatcherSubletConfig
 toby.config.TomcatWebServerConfig
+toby.config.JettyWebServerConfig
