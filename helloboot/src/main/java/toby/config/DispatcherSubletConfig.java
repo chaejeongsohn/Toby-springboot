@@ -1,10 +1,10 @@
 package toby.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
+import toby.annotation.MyAutoConfiguration;
 
-@Configuration
+@MyAutoConfiguration
 public class DispatcherSubletConfig {
     @Bean
     public DispatcherServlet dispatcherServlet(){
