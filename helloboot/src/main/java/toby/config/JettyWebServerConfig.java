@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.ClassUtils;
+import toby.annotation.ConditionalMyOnClass;
 import toby.annotation.MyAutoConfiguration;
 
 /**
@@ -20,7 +22,8 @@ import toby.annotation.MyAutoConfiguration;
  *          @Conditional 이 붙은 Annotation 을 Meta-Annotation 으로 사용하는 Annotation 의 Meta 데이터를 가져온다.
  */
 @MyAutoConfiguration
-@Conditional(JettyWebServerConfig.JettyCondition.class)
+@ConditionalMyOnClass("org.eclipse.jetty.server.Server")
+//@Conditional(JettyWebServerConfig.JettyCondition.class)
 public class JettyWebServerConfig {
     @Bean("jettyServletWebServerFactory")
     public ServletWebServerFactory servletWebServerFactory(){
@@ -29,10 +32,11 @@ public class JettyWebServerConfig {
         return webServerFactory;
     }
 
-    static class JettyCondition implements Condition {
-        @Override
-        public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-            return true;
-        }
-    }
+//    static class JettyCondition implements Condition {
+//        @Override
+//        public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+//            return ClassUtils.isPresent("org.eclipse.jetty.server.Server",
+//                    context.getClassLoader());
+//        }
+//    }
 }
