@@ -1,3 +1,5 @@
+toby.config.ServerPropertiesConfig
+toby.config.PropertyPlaceholderConfig
 toby.config.DispatcherSubletConfig
 toby.config.TomcatWebServerConfig
 toby.config.JettyWebServerConfig
