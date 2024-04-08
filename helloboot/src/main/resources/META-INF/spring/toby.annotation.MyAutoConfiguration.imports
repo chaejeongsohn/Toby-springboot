@@ -1,3 +1,4 @@
+toby.config.DataSourceConfig
 toby.config.PropertyPostProcessorConfig
 toby.config.PropertyPlaceholderConfig
 toby.config.DispatcherSubletConfig
