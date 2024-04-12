@@ -31,36 +31,10 @@ import java.sql.Driver;
 public class DataSourceConfig {
 
     /**
-     * h2 설정
-     *
-     * @ConditionalMyOnClass
-     *      해당 class 가 있는지 존재 여부를 확인한다.
-     *      (여기선 HikariDataSource 존재 여부를 확인한다.)
-     * @ConditionalOnMissingBean
-     *      동명의 bean 이 없으면, 현재 등록한 bean 을 사용하도록 한다.
-     */
-    @Bean
-    @ConditionalMyOnClass("com.zaxxer.hikari.HikariDataSource")
-    @ConditionalOnMissingBean
-    DataSource dataSource (MyDataSourceProperties properties) {
-        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-
-        try {
-            dataSource.setDriverClass((Class<? extends Driver>) Class.forName(properties.getDriverClassName()));
-            dataSource.setUrl(properties.getUrl());
-            dataSource.setUsername(properties.getUsername());
-            dataSource.setPassword(properties.getPassword());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        return dataSource;
-    }
-
-    /**
      * hikari 설정
      */
     @Bean
+    @ConditionalMyOnClass("com.zaxxer.hikari.HikariDataSource")
     @ConditionalOnMissingBean
     DataSource hikariDataSource(MyDataSourceProperties properties) {
         HikariDataSource dataSource = new HikariDataSource();
@@ -70,6 +44,27 @@ public class DataSourceConfig {
         dataSource.setUsername(properties.getUsername());
         dataSource.setPassword(properties.getPassword());
 
+        return dataSource;
+    }
+
+    /**
+     * h2 설정
+     *
+     * @ConditionalMyOnClass
+     *      해당 class 가 있는지 존재 여부를 확인한다.
+     *      (여기선 HikariDataSource 존재 여부를 확인한다.)
+     * @ConditionalOnMissingBean
+     *      동명의 bean 이 없으면, 현재 등록한 bean 을 사용하도록 한다.
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    DataSource dataSource (MyDataSourceProperties properties) throws RuntimeException, ClassNotFoundException {
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+
+        dataSource.setDriverClass((Class<? extends Driver>) Class.forName(properties.getDriverClassName()));
+        dataSource.setUrl(properties.getUrl());
+        dataSource.setUsername(properties.getUsername());
+        dataSource.setPassword(properties.getPassword());
         return dataSource;
     }
 

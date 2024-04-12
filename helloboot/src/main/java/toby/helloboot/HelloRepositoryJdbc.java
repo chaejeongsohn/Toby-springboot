@@ -2,11 +2,7 @@ package toby.helloboot;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Repository
 public class HelloRepositoryJdbc implements HelloRepository{
@@ -21,10 +17,9 @@ public class HelloRepositoryJdbc implements HelloRepository{
         try {
             return jdbcTemplate.queryForObject("select * from hello where name = '" + name + "'",
                     (rs, rowNum) -> new Hello(
-                            rs.getString("name"), rs.getInt("count")
-                    ));
-        }
-        catch (EmptyResultDataAccessException e) {
+                            rs.getString("name"), rs.getInt("count"))
+            );
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
