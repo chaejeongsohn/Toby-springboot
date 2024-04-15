@@ -47,6 +47,27 @@ public class SpringbootApplication {
 	 *
 	 * 	등등...
 	 */
+	/**
+	 * spring-boot-starter-jdbc : jdbc 를 추가한 이후에 추가된 Auto Configuration
+	 *
+	 * ...autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration
+	 * 		ExceptionTranslation 이 발생하면 PostProcessor 등록
+	 * ...autoconfigure.jdbc.DataSourceAutoConfiguration
+	 * 		DataSource 자동 구성
+	 * 		(driverClassName 은 대부분 이미 들어가 있다)
+	 * ...autoconfigure.jdbc.DataSourceConfiguration
+	 * 			$Hikari
+	 * 		Hikari 구성 정보
+	 * ...autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+	 * 		TransactionManager 구성 정보
+	 * ...autoconfigure.jdbc.JdbcTemplateAutoConfiguration
+	 * 		JdbcTemplate 구성 정보
+	 * ...autoconfigure.sql.init.SqlInitializationAutoConfiguration
+	 * 		Jdbc 를 사용할 때 Database 를 초기화 하거나, 데이터를 insert 하거나, 정리하는 기능
+	 * ...autoconfigure.transaction.TransactionAutoConfiguration
+	 * 		PlatformTransactionManager 구성 정보
+	 * 		(TransactionTemplate 이 이미 구성되어 있음)
+	 */
 	@Bean
 	ApplicationRunner run(ConditionEvaluationReport report) {
 		return args -> {
