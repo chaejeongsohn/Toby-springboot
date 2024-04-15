@@ -22,6 +22,31 @@ public class SpringbootApplication {
 	 * 		의미: condition.getKey() 에 해당하는 클래스나 메소드가 어떤 조건을 통과했는가 확인
 	 *
 	 */
+	/**
+	 * spring-boot-starter-web : web 을 추가한 이후에 추가된 Auto Configuration
+	 *
+	 * ...autoconfigure.http.HttpMessageConvertersAutoConfiguration
+	 * 		http 로 통신할 때 body 관련한 내용들 (json 처리)
+	 * ...autoconfigure.jackson.JacksonAutoConfiguration
+	 * 			$JacksonObjectMapperConfiguration
+	 * 			#jacksonObjectMapper
+	 * 		jackson 라이브러리
+	 * ...autoconfigure.web.client.RestClientAutoConfiguration
+	 * 		RestTemplate 의 Builder Bean 을 제공해준다.
+	 * 		SpringBoot 에서 RestTemplate 을 사용하려면 RestTemplateBuilder 을 받아서 추가 설정을 하고 이 Bean 을 사용하면 된다.
+	 * ...autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+	 * 		web server 구성 정보 (Tomcat 등등...)
+	 * 		@EnableConfigurationProperties(ServerProperties.class)
+	 * 			property 값 설정 내용
+	 *...autoconfigure.web.servlet.DispatcherServletAutoConfiguration
+	 * 		DispatcherServlet 구성 정보
+	 * ...autoconfigure.web.servlet.HttpEncodingAutoConfiguration
+	 * 		Http 통신 시, 인코딩 관련 구성 정보
+	 * ...autoconfigure.web.servlet.MultipartAutoConfiguration
+	 * 		Http 통신 시, Multipart 관련 구성 정보
+	 *
+	 * 	등등...
+	 */
 	@Bean
 	ApplicationRunner run(ConditionEvaluationReport report) {
 		return args -> {
