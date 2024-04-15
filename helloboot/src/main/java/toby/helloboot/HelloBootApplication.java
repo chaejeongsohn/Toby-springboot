@@ -2,16 +2,15 @@ package toby.helloboot;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
-import toby.annotation.MySpringBootApplication;
 
 /**
  * InitializingBean
  * 		모든 프로퍼티 세팅까지 다 끝나면 뭘 실행할지 코드 구현할 때 이용한다.
  * 		Lifecycle Interface 를 spring 이 호출해준다.
  */
-//@SpringBootApplication
-@MySpringBootApplication
+@SpringBootApplication
 public class HelloBootApplication{
 	private final JdbcTemplate jdbcTemplate;
 
